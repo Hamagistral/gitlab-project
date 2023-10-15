@@ -37,7 +37,7 @@ push:  ## 📤 Push container image to registry
 	docker push $(IMAGE_REG)/$(IMAGE_REPO):$(IMAGE_TAG)
 
 run: venv  ## 🏃 Run the server locally using Python & Flask
-	. $(SRC_DIR)/.venv/Scripts/activate \
+	. $(SRC_DIR)/.venv/bin/activate \
 	&& python src/run.py
 
 deploy:  ## 🚀 Deploy to Azure Web App 
@@ -53,7 +53,7 @@ undeploy:  ## 💀 Remove from Azure
 	az group delete -n $(AZURE_RES_GROUP) -o table --no-wait
 
 test: venv  ## 🎯 Unit tests for Flask app
-	. $(SRC_DIR)/.venv/Scripts/activate \
+	. $(SRC_DIR)/.venv/bin/activate \
 	&& pytest -v
 
 test-report: venv  ## 🎯 Unit tests for Flask app (with report output)
@@ -81,5 +81,5 @@ venv: $(SRC_DIR)/.venv/touchfile
 
 $(SRC_DIR)/.venv/touchfile: $(SRC_DIR)/requirements.txt
 	python -m venv $(SRC_DIR)/.venv
-	. $(SRC_DIR)/.venv/Scripts/activate; pip install -Ur $(SRC_DIR)/requirements.txt
+	. $(SRC_DIR)/.venv/bin/activate; pip install -Ur $(SRC_DIR)/requirements.txt
 	touch $(SRC_DIR)/.venv/touchfile
